@@ -14,7 +14,7 @@ import mei.contacts_for_desktop.util.DateUtil;
  * 
  * @author Marco Jakob
  */
-public class PersonEditDialogController {
+public class PersonEditDialogController implements IPersonEditDialogController {
 
     @FXML
     private TextField firstNameField;
@@ -47,6 +47,7 @@ public class PersonEditDialogController {
      * 
      * @param dialogStage
      */
+    @Override
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
         
@@ -59,6 +60,7 @@ public class PersonEditDialogController {
      * 
      * @param person
      */
+    @Override
     public void setPerson(Person person) {
         this.person = person;
 
@@ -76,6 +78,7 @@ public class PersonEditDialogController {
      * 
      * @return
      */
+    @Override
     public boolean isOkClicked() {
         return okClicked;
     }

@@ -10,7 +10,7 @@ import mei.contacts_for_desktop.MainApp;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.DateUtil;
 
-public class PersonOverviewController {
+public class PersonOverviewController implements IPersonOverviewController {
     @FXML
     private TableView<Person> personTable;
     @FXML
@@ -64,6 +64,7 @@ public class PersonOverviewController {
      * 
      * @param mainApp
      */
+    @Override
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
 

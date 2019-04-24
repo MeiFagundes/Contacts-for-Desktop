@@ -18,30 +18,36 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.model.PersonListWrapper;
+import mei.contacts_for_desktop.util.FileIO;
+import mei.contacts_for_desktop.util.IFileIO;
 import mei.contacts_for_desktop.view.BirthdayStatisticsController;
 import mei.contacts_for_desktop.view.PersonEditDialogController;
-import mei.contacts_for_desktop.view.PersonOverviewController;
-import mei.contacts_for_desktop.view.RootLayoutController;
 
 public class MainApp extends Application {
 
+    private MainUI ui;
+    private IFileIO io;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
     /**
      * The data as an observable list of Persons.
      */
-    private ObservableList<Person> personData = FXCollections.observableArrayList();
+    private final ObservableList<Person> personData = FXCollections.observableArrayList();
 
     /**
      * Constructor
      */
     public MainApp() {
+        
+        io = new FileIO(primaryStage, personData);
+        
         // Add some sample data
         personData.add(new Person("Hans", "Muster"));
         personData.add(new Person("Ruth", "Mueller"));
@@ -65,10 +71,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("AddressApp");
+        this.primaryStage.setTitle("Contacts for Desktop");
         
         // Set the application icon.
-        this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
+        //this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
 
         initRootLayout();
 
@@ -80,31 +86,14 @@ public class MainApp extends Application {
      * person file.
      */
     public void initRootLayout() {
+        
         try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class
-                    .getResource("view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-
-            // Give the controller access to the main app.
-            RootLayoutController controller = loader.getController();
-            controller.setMainApp(this);
-
-            primaryStage.show();
+            
+            ui.initialize(this, rootLayout, primaryStage);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Try to load last opened person file.
-        File file = getPersonFilePath();
-        if (file != null) {
-            loadPersonDataFromFile(file);
-        }
+        
     }
 
     /**
@@ -112,18 +101,8 @@ public class MainApp extends Application {
      */
     public void showPersonOverview() {
         try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
-
-            // Give the controller access to the main app.
-            PersonOverviewController controller = loader.getController();
-            controller.setMainApp(this);
-
+            
+            ui.showPersonOverview();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -174,30 +153,8 @@ public class MainApp extends Application {
      * Opens a dialog to show birthday statistics.
      */
     public void showBirthdayStatistics() {
-        try {
-            // Load the fxml file and create a new stage for the popup.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/BirthdayStatistics.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Birthday Statistics");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the persons into the controller.
-            BirthdayStatisticsController controller = loader.getController();
-            controller.setPersonData(personData);
-
-            // Set the dialog icon.
-            dialogStage.getIcons().add(new Image("file:resources/images/calendar.png"));
-            
-            dialogStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+            ui.showBirthdayStatistics(personData);
     }
     
     /**
@@ -208,13 +165,8 @@ public class MainApp extends Application {
      * @return
      */
     public File getPersonFilePath() {
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        String filePath = prefs.get("filePath", null);
-        if (filePath != null) {
-            return new File(filePath);
-        } else {
-            return null;
-        }
+        
+        return io.getPersonFilePath();
     }
 
     /**
@@ -224,18 +176,8 @@ public class MainApp extends Application {
      * @param file the file or null to remove the path
      */
     public void setPersonFilePath(File file) {
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        if (file != null) {
-            prefs.put("filePath", file.getPath());
-
-            // Update the stage title.
-            primaryStage.setTitle("AddressApp - " + file.getName());
-        } else {
-            prefs.remove("filePath");
-
-            // Update the stage title.
-            primaryStage.setTitle("AddressApp");
-        }
+        
+        io.setPersonFilePath(file);
     }
     
     /**
@@ -246,20 +188,10 @@ public class MainApp extends Application {
      */
     public void loadPersonDataFromFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(PersonListWrapper.class);
-            Unmarshaller um = context.createUnmarshaller();
+            
+            io.loadPersonDataFromFile(file);
 
-            // Reading XML from the file and unmarshalling.
-            PersonListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-
-            personData.clear();
-            personData.addAll(wrapper.getPersons());
-
-            // Save the file path to the registry.
-            setPersonFilePath(file);
-
-        } catch (Exception e) { // catches ANY exception
+        } catch (JAXBException e) { // catches ANY exception
         	Alert alert = new Alert(AlertType.ERROR);
         	alert.setTitle("Error");
         	alert.setHeaderText("Could not load data");
@@ -276,21 +208,11 @@ public class MainApp extends Application {
      */
     public void savePersonDataToFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(PersonListWrapper.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            // Wrapping our person data.
-            PersonListWrapper wrapper = new PersonListWrapper();
-            wrapper.setPersons(personData);
-
-            // Marshalling and saving XML to the file.
-            m.marshal(wrapper, file);
-
-            // Save the file path to the registry.
-            setPersonFilePath(file);
-        } catch (Exception e) { // catches ANY exception
+            
+            io.savePersonDataToFile(file);
+            
+        } catch (JAXBException e) {
+            
         	Alert alert = new Alert(AlertType.ERROR);
         	alert.setTitle("Error");
         	alert.setHeaderText("Could not save data");

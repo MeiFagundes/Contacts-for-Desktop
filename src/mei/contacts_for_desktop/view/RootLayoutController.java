@@ -1,30 +1,32 @@
 package mei.contacts_for_desktop.view;
 
-import java.io.File;
-
+import mei.contacts_for_desktop.util.IFileIO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
 import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.util.FileIO;
 
 /**
  * The controller for the root layout. The root layout provides the basic
  * application layout containing a menu bar and space where other JavaFX
  * elements can be placed.
  * 
- * @author Marco Jakob
+ * @author Mei
  */
-public class RootLayoutController {
+public class RootLayoutController implements IRootLayoutController {
 
     // Reference to the main application
     private MainApp mainApp;
+    
+    private IFileIO fileIO;
 
     /**
      * Is called by the main application to give a reference back to itself.
      * 
      * @param mainApp
      */
+    @Override
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
@@ -43,19 +45,9 @@ public class RootLayoutController {
      */
     @FXML
     private void handleOpen() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show save file dialog
-        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
-
-        if (file != null) {
-            mainApp.loadPersonDataFromFile(file);
-        }
+        
+        fileIO = new FileIO();
+        fileIO.Open(mainApp);
     }
 
     /**
@@ -64,12 +56,9 @@ public class RootLayoutController {
      */
     @FXML
     private void handleSave() {
-        File personFile = mainApp.getPersonFilePath();
-        if (personFile != null) {
-            mainApp.savePersonDataToFile(personFile);
-        } else {
-            handleSaveAs();
-        }
+        
+        fileIO = new FileIO();
+        fileIO.Save(mainApp);
     }
 
     /**
@@ -77,23 +66,9 @@ public class RootLayoutController {
      */
     @FXML
     private void handleSaveAs() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show save file dialog
-        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
-
-        if (file != null) {
-            // Make sure it has the correct extension
-            if (!file.getPath().endsWith(".xml")) {
-                file = new File(file.getPath() + ".xml");
-            }
-            mainApp.savePersonDataToFile(file);
-        }
+        
+        fileIO = new FileIO();
+        fileIO.SaveAs(mainApp);
     }
 
     /**
