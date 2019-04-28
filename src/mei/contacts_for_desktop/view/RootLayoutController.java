@@ -1,25 +1,28 @@
 package mei.contacts_for_desktop.view;
 
-import mei.contacts_for_desktop.util.IFileIO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.MainApp;
-import mei.contacts_for_desktop.util.FileIO;
+import mei.contacts_for_desktop.util.PersonIO;
+import mei.contacts_for_desktop.util.IPersonIO;
 
 /**
  * The controller for the root layout. The root layout provides the basic
  * application layout containing a menu bar and space where other JavaFX
  * elements can be placed.
  * 
- * @author Mei
+ * @author Marco Jakob, Mei
  */
 public class RootLayoutController implements IRootLayoutController {
 
     // Reference to the main application
     private MainApp mainApp;
     
-    private IFileIO fileIO;
+    private IPersonIO fileIO;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -46,8 +49,12 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleOpen() {
         
-        fileIO = new FileIO();
-        fileIO.Open(mainApp);
+        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        try {
+            fileIO.Open(mainApp);
+        } catch (JAXBException ex) {
+            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -57,8 +64,12 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSave() {
         
-        fileIO = new FileIO();
-        fileIO.Save(mainApp);
+        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        try {
+            fileIO.Save(mainApp);
+        } catch (JAXBException ex) {
+            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -67,8 +78,12 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSaveAs() {
         
-        fileIO = new FileIO();
-        fileIO.SaveAs(mainApp);
+        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        try {
+            fileIO.SaveAs(mainApp);
+        } catch (JAXBException ex) {
+            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

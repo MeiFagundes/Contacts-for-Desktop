@@ -16,7 +16,7 @@ import mei.contacts_for_desktop.util.LocalDateAdapter;
 /**
  * Model class for a Person.
  *
- * @author Mei
+ * @author Marco Jakob, Mei
  */
 public class Person implements IPerson {
 

@@ -7,7 +7,6 @@ package mei.contacts_for_desktop;
 
 import java.io.File;
 import java.io.IOException;
-import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,14 +16,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
-import mei.contacts_for_desktop.model.IPerson;
 import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.util.FileIO;
-import mei.contacts_for_desktop.util.IFileIO;
+import mei.contacts_for_desktop.util.PersonIO;
 import mei.contacts_for_desktop.view.BirthdayStatisticsController;
 import mei.contacts_for_desktop.view.PersonEditDialogController;
 import mei.contacts_for_desktop.view.PersonOverviewController;
 import mei.contacts_for_desktop.view.RootLayoutController;
+import mei.contacts_for_desktop.util.IPersonIO;
 
 /**
  *
@@ -32,25 +30,31 @@ import mei.contacts_for_desktop.view.RootLayoutController;
  */
 public class MainUI {
     
-    private IFileIO io;
-    private Application application;
+    private IPersonIO io;
+    private MainApp application;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
     private ObservableList<Person> personData;
     
+    public void MainUI(MainApp app){
+        
+        application = app;
+    }
+    
     /**
      * Initializes the root layout and tries to load the last opened
      * person file.
      */
-    public void initialize(Application app, BorderPane rLayout, Stage pStage)
+    public void initialize(MainApp app, BorderPane rLayout, Stage pStage, ObservableList<Person> pData)
     throws IOException, JAXBException {
-        
-        io = new FileIO(primaryStage, personData);
         
         application = app;
         rootLayout = rLayout;
         primaryStage = pStage;
+        personData = pData;
+        
+        io = new PersonIO(primaryStage, personData);
         
         // Load root layout from fxml file.
         FXMLLoader loader = new FXMLLoader();

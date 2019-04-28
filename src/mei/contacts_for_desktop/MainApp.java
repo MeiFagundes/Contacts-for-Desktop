@@ -2,7 +2,8 @@ package mei.contacts_for_desktop;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.prefs.Preferences;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -16,23 +17,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.model.PersonListWrapper;
-import mei.contacts_for_desktop.util.FileIO;
-import mei.contacts_for_desktop.util.IFileIO;
-import mei.contacts_for_desktop.view.BirthdayStatisticsController;
+import mei.contacts_for_desktop.util.PersonIO;
 import mei.contacts_for_desktop.view.PersonEditDialogController;
+import mei.contacts_for_desktop.util.IPersonIO;
 
+/**
+ * @author Marco Jakob, Mei
+ */
 public class MainApp extends Application {
 
     private MainUI ui;
-    private IFileIO io;
+    private IPersonIO io;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
@@ -46,7 +44,7 @@ public class MainApp extends Application {
      */
     public MainApp() {
         
-        io = new FileIO(primaryStage, personData);
+        
         
         // Add some sample data
         personData.add(new Person("Hans", "Muster"));
@@ -73,8 +71,14 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Contacts for Desktop");
         
+        
+        if (personData == null) {
+                System.out.println("BBBBBBBBBBBBBBBBBB");
+            }
+        io = new PersonIO(primaryStage, personData);
+        
         // Set the application icon.
-        //this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
+        this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
 
         initRootLayout();
 
@@ -89,7 +93,13 @@ public class MainApp extends Application {
         
         try {
             
-            ui.initialize(this, rootLayout, primaryStage);
+            try {
+                
+                ui = new MainUI();
+                ui.initialize(this, rootLayout, primaryStage, personData);
+            } catch (JAXBException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,7 +164,11 @@ public class MainApp extends Application {
      */
     public void showBirthdayStatistics() {
         
+        try {
             ui.showBirthdayStatistics(personData);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

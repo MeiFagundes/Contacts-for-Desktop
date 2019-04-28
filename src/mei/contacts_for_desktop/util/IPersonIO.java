@@ -13,7 +13,7 @@ import mei.contacts_for_desktop.MainApp;
  *
  * @author Mei
  */
-public interface IFileIO {
+public interface IPersonIO {
 
     public void Open(MainApp mainApp) throws JAXBException;
 

@@ -16,7 +16,7 @@ import javafx.scene.chart.XYChart;
  *
  * @author Mei
  */
-public class ChartUI implements IChartUI {
+public class FXChart implements IFXChart {
     
     private ObservableList<String> categoryNames = FXCollections.observableArrayList();
     

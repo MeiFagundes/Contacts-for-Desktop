@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Helper class to wrap a list of persons. This is used for saving the
  * list of persons to XML.
  * 
- * @author Mei
+ * @author Marco Jakob, Mei
  */
 @XmlRootElement(name = "persons")
 public class PersonListWrapper implements IPersonListWrapper {

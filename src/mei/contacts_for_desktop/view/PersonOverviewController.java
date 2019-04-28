@@ -10,6 +10,11 @@ import mei.contacts_for_desktop.MainApp;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.DateUtil;
 
+/**
+ * Dialog to edit details of a person.
+ * 
+ * @author Marco Jakob, Mei
+ */
 public class PersonOverviewController implements IPersonOverviewController {
     @FXML
     private TableView<Person> personTable;

@@ -12,7 +12,7 @@ import javafx.scene.chart.CategoryAxis;
  *
  * @author Mei
  */
-public interface IChartUI {
+public interface IFXChart {
     
     public CategoryAxis createChart(CategoryAxis xAxis, String[] categories);
     public BarChart<String, Integer> fillChart(BarChart<String, Integer> barChart, int[] monthCounter);

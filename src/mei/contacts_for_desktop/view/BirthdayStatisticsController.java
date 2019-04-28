@@ -12,7 +12,7 @@ import mei.contacts_for_desktop.model.Person;
 /**
  * The controller for the birthday statistics view.
  * 
- * @author Mei
+ * @author Marco Jakob, Mei
  */
 public class BirthdayStatisticsController implements IBirthdayStatisticsController {
 
@@ -22,7 +22,7 @@ public class BirthdayStatisticsController implements IBirthdayStatisticsControll
     @FXML
     private CategoryAxis xAxis;
     
-    private IChartUI birthdayChart = new ChartUI();
+    private IFXChart birthdayChart = new FXChart();
     
     /**
      * Initializes the controller class. This method is automatically called

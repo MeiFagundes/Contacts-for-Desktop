@@ -7,9 +7,7 @@ package mei.contacts_for_desktop.util;
 
 import java.io.File;
 import java.util.prefs.Preferences;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBContext;
@@ -24,12 +22,16 @@ import mei.contacts_for_desktop.model.PersonListWrapper;
  *
  * @author Mei
  */
-public class FileIO implements IFileIO {
+public class PersonIO implements IPersonIO {
     
     private Stage primaryStage;
     private ObservableList<Person> personData;
     
-    public FileIO(Stage primaryStage, ObservableList<Person> personData){
+    public PersonIO(Stage primaryStage, ObservableList<Person> personData){
+        
+        if (personData == null) {
+                System.out.println("CCCCCCCCCCCCC");
+            }
         
         this.primaryStage = primaryStage;
         this.personData = personData;
@@ -141,6 +143,9 @@ public class FileIO implements IFileIO {
             // Reading XML from the file and unmarshalling.
             PersonListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
 
+            if (personData == null) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            }
             personData.clear();
             personData.addAll(wrapper.getPersons());
 
@@ -152,6 +157,7 @@ public class FileIO implements IFileIO {
      * Saves the current person data to the specified file.
      * 
      * @param file
+     * @throws javax.xml.bind.JAXBException
      */
     @Override
     public void savePersonDataToFile(File file) throws JAXBException {

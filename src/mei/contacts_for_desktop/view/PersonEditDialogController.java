@@ -12,7 +12,7 @@ import mei.contacts_for_desktop.util.DateUtil;
 /**
  * Dialog to edit details of a person.
  * 
- * @author Marco Jakob
+ * @author Marco Jakob, Mei
  */
 public class PersonEditDialogController implements IPersonEditDialogController {
 
