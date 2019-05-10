@@ -6,6 +6,7 @@
 package mei.contacts_for_desktop.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.MainApp;
 
@@ -25,7 +26,7 @@ public interface IPersonIO {
     
     public void setPersonFilePath(File file);
     
-    public void loadPersonDataFromFile(File file) throws JAXBException;
+    public void loadPersonDataFromFile(File file) throws JAXBException, FileNotFoundException;
     
     public void savePersonDataToFile(File file) throws JAXBException;
     

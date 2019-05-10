@@ -6,6 +6,9 @@
 package mei.contacts_for_desktop.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -50,7 +53,11 @@ public class PersonIO implements IPersonIO {
         File file = fileChooser.showOpenDialog(primaryStage);
 
         if (file != null) {
-            loadPersonDataFromFile(file);
+            try {
+                loadPersonDataFromFile(file);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(PersonIO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -135,22 +142,21 @@ public class PersonIO implements IPersonIO {
      * @param file
      */
     @Override
-    public void loadPersonDataFromFile(File file) throws JAXBException {
+    public void loadPersonDataFromFile(File file) throws JAXBException, FileNotFoundException {
             JAXBContext context = JAXBContext
                     .newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
             // Reading XML from the file and unmarshalling.
+            try {
+                
             PersonListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-
-            if (personData == null) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            }
             personData.clear();
             personData.addAll(wrapper.getPersons());
 
             // Save the file path to the registry.
             setPersonFilePath(file);
+        } catch (Exception e) {}
     }
     
     /**

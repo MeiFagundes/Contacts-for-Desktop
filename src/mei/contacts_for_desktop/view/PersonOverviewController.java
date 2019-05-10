@@ -130,10 +130,11 @@ public class PersonOverviewController implements IPersonOverviewController {
     @FXML
     private void handleNewPerson() {
         Person tempPerson = new Person();
-        boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
-        if (okClicked) {
+        boolean okClicked;
+        okClicked = mainApp.showPersonEditDialog(tempPerson);
+        if (okClicked)
             mainApp.getPersonData().add(tempPerson);
-        }
+        
     }
 
     /**
@@ -144,6 +145,7 @@ public class PersonOverviewController implements IPersonOverviewController {
     private void handleEditPerson() {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
+            
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
             if (okClicked) {
                 showPersonDetails(selectedPerson);
