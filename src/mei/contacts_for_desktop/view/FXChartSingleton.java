@@ -16,9 +16,28 @@ import javafx.scene.chart.XYChart;
  *
  * @author Mei
  */
-public class FXChart implements IFXChart {
+public class FXChartSingleton implements IFXChart {
     
+    private static FXChartSingleton instance = null;
     private ObservableList<String> categoryNames = FXCollections.observableArrayList();
+
+    private FXChartSingleton() {}
+    
+    public static FXChartSingleton getInstance(){
+        
+        if (instance == null) {
+            instance = getNewInstance();
+        }
+        
+        return instance;
+    }
+    
+    public static FXChartSingleton getNewInstance(){
+        
+        instance = new FXChartSingleton();
+        return instance;
+    }
+    
     
     @Override
     public CategoryAxis createChart(CategoryAxis xAxis, String[] categories){

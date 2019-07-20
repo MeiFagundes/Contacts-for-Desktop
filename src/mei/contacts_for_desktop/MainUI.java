@@ -18,10 +18,10 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.PersonIO;
-import mei.contacts_for_desktop.view.BirthdayStatisticsController;
-import mei.contacts_for_desktop.view.PersonEditDialogController;
-import mei.contacts_for_desktop.view.PersonOverviewController;
-import mei.contacts_for_desktop.view.RootLayoutController;
+import mei.contacts_for_desktop.controller.BirthdayStatisticsControllerBridge;
+import mei.contacts_for_desktop.controller.PersonEditDialogController;
+import mei.contacts_for_desktop.controller.PersonOverviewController;
+import mei.contacts_for_desktop.controller.RootLayoutController;
 import mei.contacts_for_desktop.util.IPersonIO;
 
 /**
@@ -152,7 +152,7 @@ public class MainUI {
         dialogStage.setScene(scene);
 
         // Set the persons into the controller.
-        BirthdayStatisticsController controller = loader.getController();
+        BirthdayStatisticsControllerBridge controller = loader.getController();
         controller.setPersonData(personData);
 
         // Set the dialog icon.

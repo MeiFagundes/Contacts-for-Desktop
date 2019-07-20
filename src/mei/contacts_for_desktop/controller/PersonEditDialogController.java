@@ -1,12 +1,11 @@
-package mei.contacts_for_desktop.view;
+package mei.contacts_for_desktop.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mei.contacts_for_desktop.model.Person;
+import mei.contacts_for_desktop.util.AlertWrapper;
 import mei.contacts_for_desktop.util.DateUtil;
 
 /**
@@ -154,13 +153,10 @@ public class PersonEditDialogController implements IPersonEditDialogController {
             return true;
         } else {
             // Show the error message.
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
-            alert.setContentText(errorMessage);
-            
-            alert.showAndWait();
+            AlertWrapper.showError(
+                        "Invalid Fields",
+                        "Please correct invalid fields",
+                        errorMessage);
             
             return false;
         }

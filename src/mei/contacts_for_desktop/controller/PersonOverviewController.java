@@ -1,13 +1,12 @@
-package mei.contacts_for_desktop.view;
+package mei.contacts_for_desktop.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import mei.contacts_for_desktop.MainApp;
 import mei.contacts_for_desktop.model.Person;
+import mei.contacts_for_desktop.util.AlertWrapper;
 import mei.contacts_for_desktop.util.DateUtil;
 
 /**
@@ -113,13 +112,10 @@ public class PersonOverviewController implements IPersonOverviewController {
             personTable.getItems().remove(selectedIndex);
         } else {
             // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
-            
-            alert.showAndWait();
+            AlertWrapper.showError(
+                "No Selection",
+                "No Person Selected",
+                "Please select a person in the table.");
         }
     }
     
@@ -153,13 +149,10 @@ public class PersonOverviewController implements IPersonOverviewController {
 
         } else {
             // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
-            
-            alert.showAndWait();
+            AlertWrapper.showError(
+                "No Selection",
+                "No Person Selected",
+                "Please select a person in the table.");
         }
     }
 }

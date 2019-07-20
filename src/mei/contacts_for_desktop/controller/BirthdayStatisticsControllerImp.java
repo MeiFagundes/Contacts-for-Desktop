@@ -1,49 +1,42 @@
-package mei.contacts_for_desktop.view;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mei.contacts_for_desktop.controller;
 
 import java.text.DateFormatSymbols;
 import java.util.List;
 import java.util.Locale;
-import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import mei.contacts_for_desktop.model.IPerson;
 import mei.contacts_for_desktop.model.Person;
+import mei.contacts_for_desktop.view.FXChartSingleton;
+import mei.contacts_for_desktop.view.IFXChart;
 
 /**
- * The controller for the birthday statistics view.
- * 
- * @author Marco Jakob, Mei
+ *
+ * @author Mei
  */
-public class BirthdayStatisticsController implements IBirthdayStatisticsController {
-
-    @FXML
-    private BarChart<String, Integer> barChart;
-
-    @FXML
-    private CategoryAxis xAxis;
+public class BirthdayStatisticsControllerImp {
     
-    private IFXChart birthdayChart = new FXChart();
+    private IFXChart birthdayChart;
+
+    public BirthdayStatisticsControllerImp() {
+        
+        birthdayChart = FXChartSingleton.getNewInstance();
+    }
     
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
-    @FXML
-    private void initialize() {
+    public void initialize(CategoryAxis xAxis){
         
         // Get an array with the English month names.
         String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
         
         birthdayChart.createChart(xAxis, months);
     }
-
-    /**
-     * Sets the persons to show the statistics for.
-     * 
-     * @param persons
-     */
-    @Override
-    public void setPersonData(List<Person> persons) {
+    
+    public void setPersonData(List<Person> persons, BarChart<String, Integer> barChart) {
         
         // Count the number of people having their birthday in a specific month.
         int[] monthCounter = new int[12];

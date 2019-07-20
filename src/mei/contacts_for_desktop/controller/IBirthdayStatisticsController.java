@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.view;
+package mei.contacts_for_desktop.controller;
 
 import java.util.List;
-import mei.contacts_for_desktop.model.IPerson;
 import mei.contacts_for_desktop.model.Person;
 
 /**

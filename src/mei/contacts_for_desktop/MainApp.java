@@ -9,14 +9,13 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 
 import mei.contacts_for_desktop.model.Person;
+import mei.contacts_for_desktop.util.AlertWrapper;
 import mei.contacts_for_desktop.util.PersonIO;
 import mei.contacts_for_desktop.util.IPersonIO;
 
@@ -40,18 +39,23 @@ public class MainApp extends Application {
      */
     public MainApp() {
         
-        
-        
         // Add some sample data
-        personData.add(new Person("Hans", "Muster"));
-        personData.add(new Person("Ruth", "Mueller"));
-        personData.add(new Person("Heinz", "Kurz"));
-        personData.add(new Person("Cornelia", "Meier"));
-        personData.add(new Person("Werner", "Meyer"));
-        personData.add(new Person("Lydia", "Kunz"));
-        personData.add(new Person("Anna", "Best"));
-        personData.add(new Person("Stefan", "Meier"));
-        personData.add(new Person("Martin", "Mueller"));
+        personData.add(new Person("Harry", "Mason"));
+        personData.add(new Person("Cheryl", "Mason"));
+        personData.add(new Person("Jodie", "Mason"));
+        personData.add(new Person("Dahlia", "Gillespie"));
+        personData.add(new Person("Alessa", "Gillespie"));
+        personData.add(new Person("Cybil", "Bennett"));
+        personData.add(new Person("Dr. Michael", "Kaufmann"));
+        personData.add(new Person("Lisa", "Garland"));
+        personData.add(new Person("James", "Sunderland"));
+        personData.add(new Person("Maria", ""));
+        personData.add(new Person("Angela", "Orosco"));
+        personData.add(new Person("Mary", "Shepherd-Sunderland"));
+        personData.add(new Person("Eddie", "Dombrowski"));
+        personData.add(new Person("Laura", ""));
+        
+        
     }
 
     /**
@@ -68,9 +72,6 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Contacts for Desktop");
         
         
-        if (personData == null) {
-                System.out.println("BBBBBBBBBBBBBBBBBB");
-            }
         io = new PersonIO(primaryStage, personData);
         
         // Set the application icon.
@@ -177,12 +178,11 @@ public class MainApp extends Application {
             io.loadPersonDataFromFile(file);
 
         } catch (JAXBException | FileNotFoundException e) {
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error");
-        	alert.setHeaderText("Last used data was deleted");
-        	alert.setContentText("Could not load data from file:\n" + file.getPath());
-        	
-        	alert.showAndWait();
+                
+                AlertWrapper.showError(
+                        "Error",
+                        "Last used data was deleted",
+                        "Could not load data from file:\n" + file.getPath());
         }
     }
 
@@ -197,13 +197,11 @@ public class MainApp extends Application {
             io.savePersonDataToFile(file);
             
         } catch (JAXBException e) {
-            
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Error");
-        	alert.setHeaderText("Could not save data");
-        	alert.setContentText("Could not save data to file:\n" + file.getPath());
-        	
-        	alert.showAndWait();
+                
+                AlertWrapper.showError(
+                        "Error",
+                        "Could not save data",
+                        "Could not save data to file:\n" + file.getPath());
         }
     }
 

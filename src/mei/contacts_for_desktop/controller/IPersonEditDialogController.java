@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.view;
+package mei.contacts_for_desktop.controller;
 
 import javafx.stage.Stage;
 import mei.contacts_for_desktop.model.Person;

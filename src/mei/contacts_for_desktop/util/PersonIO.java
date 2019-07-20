@@ -32,9 +32,6 @@ public class PersonIO implements IPersonIO {
     
     public PersonIO(Stage primaryStage, ObservableList<Person> personData){
         
-        if (personData == null) {
-                System.out.println("CCCCCCCCCCCCC");
-            }
         
         this.primaryStage = primaryStage;
         this.personData = personData;

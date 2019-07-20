@@ -1,6 +1,7 @@
 package mei.contacts_for_desktop.model;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -26,6 +27,14 @@ public class Person implements IPerson {
     private final IntegerProperty postalCode;
     private final StringProperty city;
     private final ObjectProperty<LocalDate> birthday;
+    
+    private static int dummyMonth;
+    private static int dummyDay;
+    private static int dummyYear;
+    
+    static {
+        randomizeDummyInfo();
+    }
 
     /**
      * Default constructor.
@@ -45,10 +54,20 @@ public class Person implements IPerson {
         this.lastName = new SimpleStringProperty(lastName);
 
         // Some initial dummy data, just for convenient testing.
-        this.street = new SimpleStringProperty("some street");
-        this.postalCode = new SimpleIntegerProperty(1234);
-        this.city = new SimpleStringProperty("some city");
-        this.birthday = new SimpleObjectProperty<>(LocalDate.of(1999, 2, 21));
+        this.street = new SimpleStringProperty("Street");
+        this.postalCode = new SimpleIntegerProperty(30640640);
+        this.city = new SimpleStringProperty("City");
+        this.birthday = new SimpleObjectProperty<>(LocalDate.of(dummyYear, dummyMonth, dummyDay));
+        
+        randomizeDummyInfo();
+    }
+    
+    private static void randomizeDummyInfo(){
+        
+        Random r = new Random();
+        dummyMonth = r.nextInt(11) + 1;
+        dummyDay = r.nextInt(27) + 1;
+        dummyYear = r.nextInt(29) + 1990;
     }
 
     @Override

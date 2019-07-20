@@ -1,12 +1,11 @@
-package mei.contacts_for_desktop.view;
+package mei.contacts_for_desktop.controller;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.util.AlertWrapper;
 import mei.contacts_for_desktop.util.PersonIO;
 import mei.contacts_for_desktop.util.IPersonIO;
 
@@ -91,12 +90,11 @@ public class RootLayoutController implements IRootLayoutController {
      */
     @FXML
     private void handleAbout() {
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("AddressApp");
-    	alert.setHeaderText("About");
-    	alert.setContentText("Author: Marco Jakob\nWebsite: http://code.makery.ch");
-
-    	alert.showAndWait();
+        
+        AlertWrapper.showInformation(
+            "Contacts for Desktop",
+            "About",
+            "Authors: Mei Fagundes https://meifagundes.github.io/ ,\n Marco Jakob http://code.makery.ch/");
     }
 
     /**
