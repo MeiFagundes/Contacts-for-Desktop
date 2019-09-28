@@ -17,12 +17,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.util.PersonIO;
+import mei.contacts_for_desktop.controller.PersonController;
 import mei.contacts_for_desktop.controller.BirthdayStatisticsControllerBridge;
 import mei.contacts_for_desktop.controller.PersonEditDialogController;
 import mei.contacts_for_desktop.controller.PersonOverviewController;
 import mei.contacts_for_desktop.controller.RootLayoutController;
-import mei.contacts_for_desktop.util.IPersonIO;
 
 /**
  *
@@ -30,7 +29,7 @@ import mei.contacts_for_desktop.util.IPersonIO;
  */
 public class MainUI {
     
-    private IPersonIO io;
+    private PersonController io;
     private MainApp application;
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -54,7 +53,7 @@ public class MainUI {
         primaryStage = pStage;
         personData = pData;
         
-        io = new PersonIO(primaryStage, personData);
+        io = new PersonController(primaryStage, personData);
         
         // Load root layout from fxml file.
         FXMLLoader loader = new FXMLLoader();
@@ -73,9 +72,9 @@ public class MainUI {
         primaryStage.show();
 
         // Try to load last opened person file.
-        File file = io.getPersonFilePath();
+        File file = io.getFilePath();
         if (file != null) {
-            io.loadPersonDataFromFile(file);
+            io.loadDataFromFile(file);
         }
     }
 

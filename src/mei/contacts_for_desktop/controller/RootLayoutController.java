@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.MainApp;
 import mei.contacts_for_desktop.util.AlertWrapper;
-import mei.contacts_for_desktop.util.PersonIO;
-import mei.contacts_for_desktop.util.IPersonIO;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -21,7 +19,7 @@ public class RootLayoutController implements IRootLayoutController {
     // Reference to the main application
     private MainApp mainApp;
     
-    private IPersonIO fileIO;
+    private PersonController personController;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -48,9 +46,9 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleOpen() {
         
-        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
-            fileIO.Open(mainApp);
+            personController.Open();
         } catch (JAXBException ex) {
             Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,9 +61,9 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSave() {
         
-        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
-            fileIO.Save(mainApp);
+            personController.Save();
         } catch (JAXBException ex) {
             Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,9 +75,9 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSaveAs() {
         
-        fileIO = new PersonIO(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
-            fileIO.SaveAs(mainApp);
+            personController.SaveAs();
         } catch (JAXBException ex) {
             Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
         }

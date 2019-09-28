@@ -1,11 +1,9 @@
 package mei.contacts_for_desktop;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,11 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
-
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.AlertWrapper;
-import mei.contacts_for_desktop.util.PersonIO;
-import mei.contacts_for_desktop.util.IPersonIO;
+import mei.contacts_for_desktop.controller.PersonController;
 
 /**
  * @author Marco Jakob, Mei
@@ -25,7 +21,7 @@ import mei.contacts_for_desktop.util.IPersonIO;
 public class MainApp extends Application {
 
     private MainUI ui;
-    private IPersonIO io;
+    private PersonController io;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
@@ -72,7 +68,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Contacts for Desktop");
         
         
-        io = new PersonIO(primaryStage, personData);
+        io = new PersonController(primaryStage, personData);
         
         // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
@@ -152,7 +148,7 @@ public class MainApp extends Application {
      */
     public File getPersonFilePath() {
         
-        return io.getPersonFilePath();
+        return io.getFilePath();
     }
 
     /**
@@ -163,7 +159,7 @@ public class MainApp extends Application {
      */
     public void setPersonFilePath(File file) {
         
-        io.setPersonFilePath(file);
+        io.setFilePath(file);
     }
     
     /**
@@ -175,9 +171,9 @@ public class MainApp extends Application {
     public void loadPersonDataFromFile(File file) {
         try {
             
-            io.loadPersonDataFromFile(file);
+            file = io.Open();
 
-        } catch (JAXBException | FileNotFoundException e) {
+        } catch (JAXBException e) {
                 
                 AlertWrapper.showError(
                         "Error",
@@ -194,7 +190,7 @@ public class MainApp extends Application {
     public void savePersonDataToFile(File file) {
         try {
             
-            io.savePersonDataToFile(file);
+            io.saveDataToFile(file);
             
         } catch (JAXBException e) {
                 

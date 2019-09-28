@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.util;
+package mei.contacts_for_desktop.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -18,75 +16,61 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import mei.contacts_for_desktop.MainApp;
-import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.model.PersonListWrapper;
 
 /**
  *
  * @author Mei
  */
-public class PersonIO implements IPersonIO {
+public class PersonModel implements IModelIO {
     
-    private Stage primaryStage;
-    private ObservableList<Person> personData;
+    private final Stage primaryStage;
+    private final String fileTypeDescription;
+    private final String fileTypeStringExtension;
     
-    public PersonIO(Stage primaryStage, ObservableList<Person> personData){
-        
+    public PersonModel(Stage primaryStage, String fileTypeDescription,
+            String fileTypeStringExtension){
         
         this.primaryStage = primaryStage;
-        this.personData = personData;
+        this.fileTypeDescription = fileTypeDescription;
+        this.fileTypeStringExtension = fileTypeStringExtension;
+        
     }
-    
-    @Override
-    public void Open(MainApp mainApp) throws JAXBException {
+
+    public File OpenFile() throws JAXBException{
+        
         FileChooser fileChooser = new FileChooser();
 
         // Set extension filter
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "XML files (*.xml)", "*.xml");
+                fileTypeDescription, "*" + fileTypeStringExtension);
         fileChooser.getExtensionFilters().add(extFilter);
 
         // Show save file dialog
-        File file = fileChooser.showOpenDialog(primaryStage);
+        return fileChooser.showOpenDialog(primaryStage);
+    }
 
-        if (file != null) {
-            try {
-                loadPersonDataFromFile(file);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(PersonIO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    @Override
-    public void Save(MainApp mainApp) throws JAXBException {
+    public void Save(MainApp mainApp) throws JAXBException{
         
-        File personFile = getPersonFilePath();
-        if (personFile != null) {
-            savePersonDataToFile(personFile);
-        } else {
-            SaveAs(mainApp);
-        }
     }
-    
-    @Override
-    public void SaveAs(MainApp mainApp) throws JAXBException {
+
+    public void SaveAs(ObservableList<Person> personData) throws JAXBException{
+        
         FileChooser fileChooser = new FileChooser();
 
         // Set extension filter
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "XML files (*.xml)", "*.xml");
+                fileTypeDescription, "*" + fileTypeStringExtension);
         fileChooser.getExtensionFilters().add(extFilter);
 
         // Show save file dialog
         File file = fileChooser.showSaveDialog(primaryStage);
-
+        
         if (file != null) {
             // Make sure it has the correct extension
-            if (!file.getPath().endsWith(".xml")) {
-                file = new File(file.getPath() + ".xml");
+            if (!file.getPath().endsWith(fileTypeStringExtension)) {
+                file = new File(file.getPath() + fileTypeStringExtension);
             }
-            savePersonDataToFile(file);
+            saveDataToFile(file, personData);
         }
     }
     
@@ -98,7 +82,7 @@ public class PersonIO implements IPersonIO {
      * @return
      */
     @Override
-    public File getPersonFilePath() {
+    public File getFilePath(){
         
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("filePath", null);
@@ -116,7 +100,7 @@ public class PersonIO implements IPersonIO {
      * @param file the file or null to remove the path
      */
     @Override
-    public void setPersonFilePath(File file) {
+    public void setFilePath(File file){
         
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
@@ -133,13 +117,15 @@ public class PersonIO implements IPersonIO {
     }
     
     /**
-     * Loads person data from the specified file. The current person data will
-     * be replaced.
+     * Loads person data from the specified file.The current person data will
+ be replaced.
      * 
      * @param file
+     * @param personData
+     * @throws javax.xml.bind.JAXBException
      */
     @Override
-    public void loadPersonDataFromFile(File file) throws JAXBException, FileNotFoundException {
+    public void loadDataFromFile(File file, ObservableList<Person> personData) throws JAXBException, FileNotFoundException {
             JAXBContext context = JAXBContext
                     .newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
@@ -152,18 +138,19 @@ public class PersonIO implements IPersonIO {
             personData.addAll(wrapper.getPersons());
 
             // Save the file path to the registry.
-            setPersonFilePath(file);
-        } catch (Exception e) {}
+            setFilePath(file);
+        } catch (JAXBException e) {}
     }
     
     /**
      * Saves the current person data to the specified file.
      * 
      * @param file
+     * @param personData
      * @throws javax.xml.bind.JAXBException
      */
     @Override
-    public void savePersonDataToFile(File file) throws JAXBException {
+    public void saveDataToFile(File file, ObservableList<Person> personData) throws JAXBException{
         
             JAXBContext context = JAXBContext
                     .newInstance(PersonListWrapper.class);
@@ -178,7 +165,8 @@ public class PersonIO implements IPersonIO {
             m.marshal(wrapper, file);
 
             // Save the file path to the registry.
-            setPersonFilePath(file);
+            setFilePath(file);
     }
+    
     
 }
