@@ -13,25 +13,24 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.model.PersonModel;
+import mei.contacts_for_desktop.model.PersonIOModel;
 
 /**
  *
  * @author Mei
  */
-public class PersonController {
+public class PersonIOController {
     
     private final Stage primaryStage;
     private ObservableList<Person> personData;
-    private PersonModel personModel;
+    private PersonIOModel personModel;
     
-    public PersonController(Stage primaryStage, ObservableList<Person> personData){
+    public PersonIOController(Stage primaryStage, ObservableList<Person> personData){
         
         
         this.primaryStage = primaryStage;
         this.personData = personData;
-        personModel = new PersonModel(primaryStage, "XML files (*.xml)", ".xml");
+        personModel = new PersonIOModel(primaryStage, "XML files (*.xml)", ".xml");
     }
     
     public File Open() throws JAXBException {
@@ -44,13 +43,13 @@ public class PersonController {
                 try {
                     personModel.loadDataFromFile(file, personData);
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(PersonController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PersonIOController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return file;
             }
             
         } catch (JAXBException ex) {
-            Logger.getLogger(PersonController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PersonIOController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;

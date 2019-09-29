@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.controller;
+package mei.contacts_for_desktop.controller.Interface;
 
-import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.Main;
 
 /**
  *
@@ -18,6 +18,6 @@ public interface IPersonOverviewController {
      *
      * @param mainApp
      */
-    void setMainApp(MainApp mainApp);
+    void setMainApp(Main mainApp);
     
 }

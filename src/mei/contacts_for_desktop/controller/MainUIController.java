@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop;
+package mei.contacts_for_desktop.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,8 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
+import mei.contacts_for_desktop.Main;
 import mei.contacts_for_desktop.model.Person;
-import mei.contacts_for_desktop.controller.PersonController;
+import mei.contacts_for_desktop.controller.PersonIOController;
 import mei.contacts_for_desktop.controller.BirthdayStatisticsControllerBridge;
 import mei.contacts_for_desktop.controller.PersonEditDialogController;
 import mei.contacts_for_desktop.controller.PersonOverviewController;
@@ -27,16 +28,16 @@ import mei.contacts_for_desktop.controller.RootLayoutController;
  *
  * @author Mei
  */
-public class MainUI {
+public class MainUIController {
     
-    private PersonController io;
-    private MainApp application;
+    private PersonIOController io;
+    private Main application;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
     private ObservableList<Person> personData;
     
-    public void MainUI(MainApp app){
+    public void MainUI(Main app){
         
         application = app;
     }
@@ -45,7 +46,7 @@ public class MainUI {
      * Initializes the root layout and tries to load the last opened
      * person file.
      */
-    public void initialize(MainApp app, BorderPane rLayout, Stage pStage, ObservableList<Person> pData)
+    public void initialize(Main app, BorderPane rLayout, Stage pStage, ObservableList<Person> pData)
     throws IOException, JAXBException {
         
         application = app;
@@ -53,11 +54,11 @@ public class MainUI {
         primaryStage = pStage;
         personData = pData;
         
-        io = new PersonController(primaryStage, personData);
+        io = new PersonIOController(primaryStage, personData);
         
         // Load root layout from fxml file.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApp.class
+        loader.setLocation(Main.class
                 .getResource("view/RootLayout.fxml"));
         rootLayout = (BorderPane) loader.load();
 
@@ -67,7 +68,7 @@ public class MainUI {
 
         // Give the controller access to the application.
         RootLayoutController controller = loader.getController();
-        controller.setMainApp((MainApp) application);
+        controller.setMainApp((Main) application);
 
         primaryStage.show();
 
@@ -85,7 +86,7 @@ public class MainUI {
         
         // Load person overview.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
+        loader.setLocation(Main.class.getResource("view/PersonOverview.fxml"));
         AnchorPane personOverview = (AnchorPane) loader.load();
 
         // Set person overview into the center of root layout.
@@ -93,7 +94,7 @@ public class MainUI {
 
         // Give the controller access to the main app.
         PersonOverviewController controller = loader.getController();
-        controller.setMainApp((MainApp) application);
+        controller.setMainApp((Main) application);
     }
     
     /**
@@ -108,7 +109,7 @@ public class MainUI {
         
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
+        loader.setLocation(Main.class.getResource("view/PersonEditDialog.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
         // Create the dialog Stage.
@@ -141,7 +142,7 @@ public class MainUI {
         
         // Load the fxml file and create a new stage for the popup.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApp.class.getResource("view/BirthdayStatistics.fxml"));
+        loader.setLocation(Main.class.getResource("view/BirthdayStatistics.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Birthday Statistics");
