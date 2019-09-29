@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop.controller;
 
+import mei.contacts_for_desktop.controller.Interface.IPersonEditDialogController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;

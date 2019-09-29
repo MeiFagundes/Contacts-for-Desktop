@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop.model;
 
+import mei.contacts_for_desktop.model.Interface.IPersonListWrapper;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;

@@ -1,10 +1,11 @@
 package mei.contacts_for_desktop.controller;
 
+import mei.contacts_for_desktop.controller.Interface.IPersonOverviewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.Main;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.AlertWrapper;
 import mei.contacts_for_desktop.util.DateUtil;
@@ -36,7 +37,7 @@ public class PersonOverviewController implements IPersonOverviewController {
     private Label birthdayLabel;
 
     // Reference to the main application.
-    private MainApp mainApp;
+    private Main mainApp;
 
     /**
      * The constructor.
@@ -69,7 +70,7 @@ public class PersonOverviewController implements IPersonOverviewController {
      * @param mainApp
      */
     @Override
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
 
         // Add observable list data to the table

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.model;
+package mei.contacts_for_desktop.model.Interface;
 
 /**
  *

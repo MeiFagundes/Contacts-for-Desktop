@@ -5,6 +5,7 @@
  */
 package mei.contacts_for_desktop.model;
 
+import mei.contacts_for_desktop.model.Interface.IModelIO;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.prefs.Preferences;
@@ -15,19 +16,19 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.Main;
 
 /**
  *
  * @author Mei
  */
-public class PersonModel implements IModelIO {
+public class PersonIOModel implements IModelIO {
     
     private final Stage primaryStage;
     private final String fileTypeDescription;
     private final String fileTypeStringExtension;
     
-    public PersonModel(Stage primaryStage, String fileTypeDescription,
+    public PersonIOModel(Stage primaryStage, String fileTypeDescription,
             String fileTypeStringExtension){
         
         this.primaryStage = primaryStage;
@@ -49,7 +50,7 @@ public class PersonModel implements IModelIO {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
-    public void Save(MainApp mainApp) throws JAXBException{
+    public void Save(Main mainApp) throws JAXBException{
         
     }
 
@@ -84,7 +85,7 @@ public class PersonModel implements IModelIO {
     @Override
     public File getFilePath(){
         
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
         String filePath = prefs.get("filePath", null);
         if (filePath != null) {
             return new File(filePath);
@@ -102,7 +103,7 @@ public class PersonModel implements IModelIO {
     @Override
     public void setFilePath(File file){
         
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        Preferences prefs = Preferences.userNodeForPackage(Main.class);
         if (file != null) {
             prefs.put("filePath", file.getPath());
 

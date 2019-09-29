@@ -1,10 +1,11 @@
 package mei.contacts_for_desktop.controller;
 
+import mei.contacts_for_desktop.controller.Interface.IRootLayoutController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javax.xml.bind.JAXBException;
-import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.Main;
 import mei.contacts_for_desktop.util.AlertWrapper;
 
 /**
@@ -17,9 +18,9 @@ import mei.contacts_for_desktop.util.AlertWrapper;
 public class RootLayoutController implements IRootLayoutController {
 
     // Reference to the main application
-    private MainApp mainApp;
+    private Main mainApp;
     
-    private PersonController personController;
+    private PersonIOController personController;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -27,7 +28,7 @@ public class RootLayoutController implements IRootLayoutController {
      * @param mainApp
      */
     @Override
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -46,7 +47,7 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleOpen() {
         
-        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonIOController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
             personController.Open();
         } catch (JAXBException ex) {
@@ -61,7 +62,7 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSave() {
         
-        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonIOController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
             personController.Save();
         } catch (JAXBException ex) {
@@ -75,7 +76,7 @@ public class RootLayoutController implements IRootLayoutController {
     @FXML
     private void handleSaveAs() {
         
-        personController = new PersonController(mainApp.getPrimaryStage(), mainApp.getPersonData());
+        personController = new PersonIOController(mainApp.getPrimaryStage(), mainApp.getPersonData());
         try {
             personController.SaveAs();
         } catch (JAXBException ex) {

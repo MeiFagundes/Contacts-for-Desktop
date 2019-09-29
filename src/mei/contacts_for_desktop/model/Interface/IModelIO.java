@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mei.contacts_for_desktop.model;
+package mei.contacts_for_desktop.model.Interface;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.collections.ObservableList;
 import javax.xml.bind.JAXBException;
-import mei.contacts_for_desktop.MainApp;
+import mei.contacts_for_desktop.Main;
+import mei.contacts_for_desktop.model.Person;
 
 /**
  *
@@ -19,7 +20,7 @@ public interface IModelIO {
 
     public File OpenFile() throws JAXBException;
 
-    public void Save(MainApp mainApp) throws JAXBException;
+    public void Save(Main mainApp) throws JAXBException;
 
     public void SaveAs(ObservableList<Person> personData) throws JAXBException;
     

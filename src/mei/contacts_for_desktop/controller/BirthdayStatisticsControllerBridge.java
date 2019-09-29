@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop.controller;
 
+import mei.contacts_for_desktop.controller.Interface.IBirthdayStatisticsController;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;

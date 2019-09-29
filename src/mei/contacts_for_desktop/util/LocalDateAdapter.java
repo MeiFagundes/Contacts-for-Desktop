@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop.util;
 
+import mei.contacts_for_desktop.util.Interface.ILocalDateAdapter;
 import java.time.LocalDate;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;

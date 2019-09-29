@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop;
 
+import mei.contacts_for_desktop.controller.MainUIController;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -13,15 +14,15 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.util.AlertWrapper;
-import mei.contacts_for_desktop.controller.PersonController;
+import mei.contacts_for_desktop.controller.PersonIOController;
 
 /**
  * @author Marco Jakob, Mei
  */
-public class MainApp extends Application {
+public class Main extends Application {
 
-    private MainUI ui;
-    private PersonController io;
+    private MainUIController ui;
+    private PersonIOController io;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
@@ -33,7 +34,7 @@ public class MainApp extends Application {
     /**
      * Constructor
      */
-    public MainApp() {
+    public Main() {
         
         // Add some sample data
         personData.add(new Person("Harry", "Mason"));
@@ -68,7 +69,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("Contacts for Desktop");
         
         
-        io = new PersonController(primaryStage, personData);
+        io = new PersonIOController(primaryStage, personData);
         
         // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
@@ -88,10 +89,10 @@ public class MainApp extends Application {
             
             try {
                 
-                ui = new MainUI();
+                ui = new MainUIController();
                 ui.initialize(this, rootLayout, primaryStage, personData);
             } catch (JAXBException ex) {
-                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,7 +123,7 @@ public class MainApp extends Application {
             ui.showPersonEditDialog(person);
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -135,7 +136,7 @@ public class MainApp extends Application {
         try {
             ui.showBirthdayStatistics(personData);
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -209,7 +210,7 @@ public class MainApp extends Application {
         return primaryStage;
     }
     
-    public MainUI getUi(){
+    public MainUIController getUi(){
         return ui;
     }
 

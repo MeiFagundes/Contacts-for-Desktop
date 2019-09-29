@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Locale;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
-import mei.contacts_for_desktop.model.IPerson;
+import mei.contacts_for_desktop.model.Interface.IPerson;
 import mei.contacts_for_desktop.model.Person;
 import mei.contacts_for_desktop.view.FXChartSingleton;
-import mei.contacts_for_desktop.view.IFXChart;
+import mei.contacts_for_desktop.view.Interface.IFXChart;
 
 /**
  *

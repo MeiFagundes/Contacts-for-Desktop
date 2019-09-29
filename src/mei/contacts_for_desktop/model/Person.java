@@ -1,5 +1,6 @@
 package mei.contacts_for_desktop.model;
 
+import mei.contacts_for_desktop.model.Interface.IPerson;
 import java.time.LocalDate;
 import java.util.Random;
 

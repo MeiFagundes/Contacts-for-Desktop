@@ -5,6 +5,7 @@
  */
 package mei.contacts_for_desktop.view;
 
+import mei.contacts_for_desktop.view.Interface.IFXChart;
 import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
