@@ -4,12 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/model/Interface/IModelIO.java</file>
+            <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/model/Interface/ISQLFactory.java</file>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/controller/PersonIOController.java</file>
+            <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/util/SQLConnector.java</file>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/controller/MainUIController.java</file>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/Main.java</file>
+            <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/controller/SQLConnectionController.java</file>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/model/Person.java</file>
-            <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/model/PersonIOModel.java</file>
             <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/controller/RootLayoutController.java</file>
+            <file>file:/C:/Users/Mei/OneDrive/Code/Repositories/Contacts%20%20for%20Desktop/src/mei/contacts_for_desktop/model/PersonIOModel.java</file>
         </group>
     </open-files>
 </project-private>
